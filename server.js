@@ -7,17 +7,28 @@ if (process.env.NODE_ENV != "production") {
 // Import dependencies
 const express = require('express');
 const connectToDb = require('./config/connectToDb');
+const Note = require("./models/note");
+const Notes = require("./models/note");
 
-// Create an express app
+// create an express app
 const app = express();
+
+// Configure express app
+app.use(express.json());
 
 // Connect to database
 connectToDb();
 
 // Routing 
-app.get('/', (req, res) => {
-    res.json({hello : "world"});
-})
 
+app.get('notes' );
+
+app.get('/notes/:id');
+
+app.post('/notes');
+
+app.put('/notes/:id');
+
+app.delete('/notes/:id');
 // Start over server
 app.listen(process.env.PORT);
