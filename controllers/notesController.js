@@ -1,73 +1,73 @@
 const Note = require("../models/note");
 
 const fetchNotes = async (req, res) => {
-    // Find the notes
-    const notes = await Note.find();
-    //  Respond with them
-    res.json({ notes: notes});
+  // Find the notes
+  const notes = await Note.find();
+
+  // Respond with them
+  res.json({ notes });
 };
 
 const fetchNote = async (req, res) => {
-    // Get id off the url 
-    const noteId = req.params.id;
+  // Get id off the url
+  const noteId = req.params.id;
 
-    // Find the note using id
-    const note = await Note.findById(noteId);
-    
-    // Respond with the note
-    res.json({ note: note });
+  // Find the note using that id
+  const note = await Note.findById(noteId);
+
+  // Respond with the note
+  res.json({ note });
 };
 
 const createNote = async (req, res) => {
-    // Get the sent in data off request body
-    const title  = req.body.title;
-    const body = req.body.body
+  // Get the sent in data off request body
+  const { title, body } = req.body;
 
-    // Create a note with it
-    const note =  await Note.create({
-        title: title,
-        body: body,
-    });
+  // Create a note with it
+  const note = await Note.create({
+    title,
+    body,
+  });
 
-    // responf with the new note
-    res.json({ note: note });
+  // respond with the new note
+  res.json({ note });
 };
 
-const updateNote =  async (req, res) => {
-    // Get the id off the url
-    const noteId = req.params.id;
+const updateNote = async (req, res) => {
+  // Get the id off the url
+  const noteId = req.params.id;
 
-    // Get the data off the req body
-    const title = req.body.title;
-    const body = req.body.body;
+  // Get the data off the req body
+  const { title, body } = req.body;
 
-    // Find and update the record
-    await Note.findByIdAndUpdate(noteId, {
-        title: title,
-        body: body,
-    });
-    // Find updated note
-    const note = await Note.findById(noteId);
+  // Find and update the record
+  await Note.findByIdAndUpdate(noteId, {
+    title,
+    body,
+  });
 
-    // Respond with it
-    res.json({ note });
+  // Find updated note
+  const note = await Note.findById(noteId);
+
+  // Respond with it
+  res.json({ note });
 };
 
 const deleteNote = async (req, res) => {
-    // get id off url 
-    const noteId = req.params.id;
+  // get id off url
+  const noteId = req.params.id;
 
-    // Delete the record
-    await Note.deleteOne({ id: noteId });
+  // Delete the record
+  await Note.deleteOne({ id: noteId });
 
-    // Respond
-    res.json({ success: "Record Deleted"});
+  // Respond
+  res.json({ success: "Record deleted" });
 };
 
 module.exports = {
-    fetchNotes,
-    fetchNote,
-    createNote,
-    updateNote,
-    deleteNote,
+  fetchNotes,
+  fetchNote,
+  createNote,
+  updateNote,
+  deleteNote,
 };
